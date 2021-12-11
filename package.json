@@ -1,0 +1,22 @@
+{
+  "name": "c4-solver",
+  "version": "1.0.0",
+  "description": "c4 mun",
+  "dependencies": {
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.12"
+  },
+  "scripts": {
+    "c4": "ts-node c4.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CampbellPedersen/c4-solver.git"
+  },
+  "author": "Campbell Pedersen",
+  "license": "MIT",
+  "homepage": "https://github.com/CampbellPedersen/c4-solver#readme"
+}
