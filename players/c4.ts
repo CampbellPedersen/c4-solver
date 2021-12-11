@@ -97,8 +97,10 @@ const gatherPlayers = (count: number): Circle<Player> => {
 }
 
 /** Reads number of players from command line */
-const countPlayers = () => {
-  const players = +process.argv.slice(2);
+const countPlayers = (): number | undefined => {
+  const playerArg = process.argv.slice(2)[0];
+  if (playerArg == null) return;
+  const players = +playerArg
   if (Number.isNaN(players) || players < 2) {
     console.log('Must have at least 2 players');
     process.exit();
@@ -108,7 +110,9 @@ const countPlayers = () => {
 }
 
 /* Execute */
-c4(countPlayers());
-
-/* Or loop if you'd like */
-// c4ButLooped(100)
+const playerCount = countPlayers()
+if (playerCount) {
+  c4(playerCount)
+} else {
+  c4ButLooped(100)
+}

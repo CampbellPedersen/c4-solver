@@ -10,7 +10,8 @@
     "@types/node": "^16.11.12"
   },
   "scripts": {
-    "c4": "ts-node c4.ts"
+    "c4": "ts-node ./coconuts/c4.ts",
+    "bad-c4": "ts-node ./players/c4.ts"
   },
   "repository": {
     "type": "git",
