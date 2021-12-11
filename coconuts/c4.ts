@@ -1,9 +1,12 @@
+import { Coconut, crack } from "./coconut";
+import {around} from './array';
+
 const c4 = (playerCount: number) => {
-  // const players = gatherPlayers(playerCount);
-  // const playersAfterGame = coconut(players);
-  // const winner = getWinner(playersAfterGame)
-  // if (!winner) return;
-  // console.log(`${playerCount} players: Position ${winner.position + 1}`)
+  const coconuts = initCoconuts(playerCount);
+  const remaining = coconut(coconuts);
+  const winningIndex = remaining[0]?.owner;
+  if (winningIndex == null) return console.log('No winner. What?')
+  console.log(`${playerCount} players: Position ${winningIndex + 1}`)
 }
 
 const c4ButLooped = (max: number) => {
@@ -11,6 +14,50 @@ const c4ButLooped = (max: number) => {
     c4(i)
   }
 }
+
+const coconut = (coconuts: Coconut[], curr: number = 0, crackCounter: number = 0): Coconut[] => {
+  // Base case
+  if (winner(coconuts)) return coconuts;
+
+  // If not needing to crack yet
+  if (crackCounter < 3) {
+    const nextIndex = around(coconuts, curr + 1);
+    const nextCrackCounter = crackCounter + 1;
+    return coconut(coconuts, nextIndex, nextCrackCounter)
+  }
+
+  const cracked = crack(coconuts[curr]);
+  switch (cracked.length) {
+    case 0: {
+      const updated: Coconut[] = coconuts.filter((_, i) => i !== curr);
+      const nextIndex = around(coconuts, curr);
+      const nextCrackCounter = 0;
+      return coconut(updated, nextIndex, nextCrackCounter);
+    }
+    case 1:
+    case 2: {
+      const updated: Coconut[] = coconuts.flatMap((c, i) => {
+        if (i !== curr) return [c];
+        return cracked;
+      })
+      const nextIndex = around(coconuts, curr + 1);
+      const nextCrackCounter = 0;
+      return coconut(updated, nextIndex, nextCrackCounter)
+    }
+  }
+}
+
+/** Checks if the same owner owns all the coconuts remaining */
+const winner = (coconuts: Coconut[]): boolean => {
+  const owners = [... new Set(coconuts.map(c => c.owner))];
+  return owners.length < 2;
+}
+
+const initCoconuts = (playerCount: number): Coconut[] =>
+  [...new Array(playerCount)].map((_, owner) => ({
+    owner,
+    state: 'big'
+  }))
 
 /** Reads number of players from command line */
 const countPlayers = (): number | undefined => {

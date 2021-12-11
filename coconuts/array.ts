@@ -1,0 +1,1 @@
+export const around = <T>(arr: T[], curr: number): number => curr % arr.length
