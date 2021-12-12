@@ -3,6 +3,7 @@ import {around} from './array';
 
 const c4 = (playerCount: number) => {
   const coconuts = initCoconuts(playerCount);
+  // logState(coconuts);
   const remaining = coconut(coconuts);
   const winningIndex = remaining[0]?.owner;
   if (winningIndex == null) return console.log('No winner. What?');
@@ -30,8 +31,9 @@ const coconut = (coconuts: Coconut[], curr: number = 0, crackCounter: number = 0
     if (i !== curr) return [c];
     return cracked;
   });
+  // logState(updated);
 
-  const nextIndex = around(coconuts, curr + cracked.length);
+  const nextIndex = around(updated, curr + cracked.length);
   const resetCrackCounter = 0;
   return coconut(updated, nextIndex, resetCrackCounter);
 }
@@ -57,6 +59,10 @@ const countPlayers = (): number | undefined => {
   }
   
   return players;
+}
+
+const logState = (coconuts: Coconut[]) => {
+  console.log(coconuts.map(c => `${c.state} (${c.owner + 1})`))
 }
 
 const playerCount = countPlayers();
