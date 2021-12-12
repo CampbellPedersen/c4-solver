@@ -1,6 +1,6 @@
 type CoconutState = Coconut['state'];
 
-type BigCoconut = {
+export type BigCoconut = {
   owner: number;
   state: 'big';
 }
