@@ -69,5 +69,5 @@ const playerCount = countPlayers();
 if (playerCount) {
   c4(playerCount);
 } else {
-  c4ButLooped(100);
+  c4ButLooped(50);
 }
